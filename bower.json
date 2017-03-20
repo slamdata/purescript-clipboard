@@ -1,0 +1,25 @@
+{
+  "name": "purescript-clipboard",
+  "license": "Apache-2.0",
+  "authors": [
+    "Irakli Safareli <i.safareli@gmail.com> (https://github.com/safareli)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/slamdata/purescript-clipboard.git"
+  },
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "node_modules",
+    "output",
+    "example",
+    "bower.json",
+    "package.json"
+  ],
+  "dependencies": {
+    "purescript-prelude": "^2.4.0",
+    "purescript-dom": "^3.5.1",
+    "purescript-css": "^2.1.0"
+  }
+}
