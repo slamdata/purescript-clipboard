@@ -18,8 +18,8 @@
     "package.json"
   ],
   "dependencies": {
-    "purescript-prelude": "^2.4.0",
-    "purescript-dom": "^3.5.1",
-    "purescript-css": "^2.1.0"
+    "purescript-prelude": "^3.0.0",
+    "purescript-dom": "^4.2.0",
+    "purescript-css": "^3.0.0"
   }
 }

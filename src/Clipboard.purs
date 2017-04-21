@@ -12,7 +12,7 @@ import DOM (DOM)
 import CSS (Selector, selector)
 import DOM.Node.Types (Element)
 
-foreign import data Clipboard :: *
+foreign import data Clipboard :: Type
 
 foreign import fromElement
   :: forall eff
