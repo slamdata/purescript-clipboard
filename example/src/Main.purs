@@ -5,7 +5,6 @@ import Prelude
 import Control.Monad.Eff (Eff)
 
 import Data.Maybe (fromMaybe)
-import Data.Nullable (toMaybe)
 
 import DOM (DOM)
 import CSS (Selector, fromString)
@@ -27,9 +26,7 @@ onLoad action
   =<< window
 
 stringFromAttr :: forall eff. String -> Element -> Eff (dom :: DOM | eff) String
-stringFromAttr attr el =  do
-  val <- getAttribute attr el
-  pure $ fromMaybe "" $ toMaybe val
+stringFromAttr attr el = fromMaybe "" <$> getAttribute attr el
 
 testElement :: forall eff. Element -> Eff (dom :: DOM | eff) Unit
 testElement el = void $ C.fromElement el $ stringFromAttr "data-copy-text" el
@@ -41,6 +38,6 @@ main :: forall eff. Eff (dom :: DOM | eff) Unit
 main = onLoad do
   win <- window
   doc <- documentToNonElementParentNode <<< htmlDocumentToDocument <$> document win
-  element <- toMaybe <$> getElementById (ElementId "test-element") doc
+  element <- getElementById (ElementId "test-element") doc
   fromMaybe (pure unit) $ testElement <$> element
   testSelector $ fromString ".test-selector"

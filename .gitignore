@@ -2,8 +2,7 @@ npm-debug.log
 /.*
 !/.gitignore
 !/.travis.yml
-!/.jscsrc
-!/.jshintrc
+!/.eslintrc.json
 /bower_components/
 /node_modules/
 /output/
