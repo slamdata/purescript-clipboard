@@ -38,7 +38,7 @@ foreign import fromStringSelector
 -- | copies the text inside the returned element to the clipboard.
 foreign import fromElementWithTarget
   :: forall eff
-  . Element
+   . Element
   -> Eff (dom :: DOM | eff) Element
   -> Eff (dom :: DOM | eff) Clipboard
 
