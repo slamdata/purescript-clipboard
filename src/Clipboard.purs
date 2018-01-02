@@ -2,6 +2,7 @@ module Clipboard
   ( Clipboard
   , fromElement
   , fromCSSSelector
+  , fromElementWithTarget
   , destroy
   ) where
 
@@ -31,6 +32,14 @@ foreign import fromStringSelector
   :: forall eff
    . String
   -> (Element -> Eff (dom :: DOM | eff) String)
+  -> Eff (dom :: DOM | eff) Clipboard
+
+-- | Registers a click handler on an Event, which triggers the passed `Eff` and
+-- | copies the text inside the returned element to the clipboard.
+foreign import fromElementWithTarget
+  :: forall eff
+   . Element
+  -> Eff (dom :: DOM | eff) Element
   -> Eff (dom :: DOM | eff) Clipboard
 
 foreign import destroy
