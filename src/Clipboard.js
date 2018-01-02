@@ -26,6 +26,17 @@ exports.fromStringSelector = makeFromX(function makeFromX$fromStringSelector (ef
   };
 });
 
+exports.fromElementWithTarget = function (el){
+    return function(targetSelector) {
+        return function() {
+            return new Clipboard(el, {
+                target: targetSelector
+            });
+        };
+    };
+};
+
+
 exports.destroy = function destroy (clipboard) {
   return function destroy$Eff () {
     clipboard.destroy();
