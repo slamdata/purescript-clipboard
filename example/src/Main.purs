@@ -4,47 +4,45 @@ import Prelude
 
 import CSS (Selector, fromString)
 import Clipboard as C
-import Control.Monad.Eff (Eff)
-import DOM (DOM)
-import DOM.Event.EventTarget (addEventListener, eventListener)
-import DOM.HTML (window)
-import DOM.HTML.Event.EventTypes (load)
-import DOM.HTML.Types (windowToEventTarget, htmlDocumentToDocument)
-import DOM.HTML.Window (document)
-import DOM.Node.Element (getAttribute)
-import DOM.Node.NonElementParentNode (getElementById)
-import DOM.Node.Types (Element, ElementId(ElementId), documentToNonElementParentNode)
 import Data.Maybe (fromJust, fromMaybe)
-import Data.Newtype (wrap)
+import Effect (Effect)
 import Partial.Unsafe (unsafePartial)
+import Web.DOM.Element (Element)
+import Web.DOM.Element as Element
+import Web.DOM.NonElementParentNode (getElementById)
+import Web.Event.EventTarget (addEventListener, eventListener)
+import Web.HTML (window)
+import Web.HTML.Event.EventTypes (load)
+import Web.HTML.HTMLDocument as HTMLDocument
+import Web.HTML.Window as Window
 
-onLoad :: forall eff. (Eff (dom :: DOM | eff) Unit) -> Eff (dom :: DOM | eff) Unit
-onLoad action
-  = addEventListener load (eventListener (const action)) false
-  <<< windowToEventTarget
-  =<< window
+onLoad :: Effect Unit -> Effect Unit --forall eff. (Eff (dom :: DOM | eff) Unit) -> Eff (dom :: DOM | eff) Unit
+onLoad action = do
+  listener <- eventListener $ const action
+  win <- map Window.toEventTarget window
+  addEventListener load listener false win
 
-stringFromAttr :: forall eff. String -> Element -> Eff (dom :: DOM | eff) String
-stringFromAttr attr el = fromMaybe "" <$> getAttribute attr el
+stringFromAttr :: String -> Element -> Effect String
+stringFromAttr attr el = fromMaybe "" <$> Element.getAttribute attr el
 
-testElement :: forall eff. Element -> Eff (dom :: DOM | eff) Unit
+testElement :: Element -> Effect Unit
 testElement el = void $ C.fromElement el $ stringFromAttr "data-copy-text" el
 
-testSelector :: forall eff. Selector -> Eff (dom :: DOM | eff) Unit
+testSelector :: Selector -> Effect Unit
 testSelector sel = void $ C.fromCSSSelector sel $ stringFromAttr "data-copy-text"
 
-testInputSelector :: forall eff. Eff (dom :: DOM | eff) Unit
+testInputSelector :: Effect Unit
 testInputSelector = do
- doc <- documentToNonElementParentNode <<< htmlDocumentToDocument <$> (document =<< window)
- let getInput = unsafePartial fromJust <$> getElementById (wrap "input-selector") doc
- button <- unsafePartial fromJust <$> getElementById (wrap "input-button-selector") doc
+ doc <- HTMLDocument.toNonElementParentNode <$> (Window.document =<< window)
+ let getInput = unsafePartial fromJust <$> getElementById "input-selector" doc
+ button <- unsafePartial fromJust <$> getElementById "input-button-selector" doc
  void $ C.fromElementWithTarget button getInput
 
-main :: forall eff. Eff (dom :: DOM | eff) Unit
+main :: Effect Unit
 main = onLoad do
   win <- window
-  doc <- documentToNonElementParentNode <<< htmlDocumentToDocument <$> document win
-  element <- getElementById (ElementId "test-element") doc
+  doc <- HTMLDocument.toNonElementParentNode <$> Window.document win
+  element <- getElementById "test-element" doc
   fromMaybe (pure unit) $ testElement <$> element
   testSelector $ fromString ".test-selector"
   testInputSelector
