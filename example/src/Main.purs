@@ -16,7 +16,7 @@ import Web.HTML.Event.EventTypes (load)
 import Web.HTML.HTMLDocument as HTMLDocument
 import Web.HTML.Window as Window
 
-onLoad :: Effect Unit -> Effect Unit --forall eff. (Eff (dom :: DOM | eff) Unit) -> Eff (dom :: DOM | eff) Unit
+onLoad :: Effect Unit -> Effect Unit
 onLoad action = do
   listener <- eventListener $ const action
   win <- map Window.toEventTarget window
