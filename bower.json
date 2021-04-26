@@ -6,7 +6,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/slamdata/purescript-clipboard.git"
+    "url": "https://github.com/slamdata/purescript-clipboard.git"
   },
   "ignore": [
     "**/.*",
@@ -18,12 +18,12 @@
     "package.json"
   ],
   "dependencies": {
-    "purescript-prelude": "^4.1.1",
-    "purescript-web-dom": "^3.0.0",
-    "purescript-css": "^4.0.0"
+    "purescript-prelude": "^5.0.0",
+    "purescript-web-dom": "^5.0.0",
+    "purescript-css": "^5.0.1"
   },
   "devDependencies": {
-    "purescript-web-html": "^2.2.1",
-    "purescript-web-events": "^2.0.1"
+    "purescript-web-html": "^3.0.1",
+    "purescript-web-events": "^3.0.0"
   }
 }

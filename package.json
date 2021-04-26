@@ -7,11 +7,11 @@
     "build-example": "pulp browserify -I example/src --to example/example.js"
   },
   "dependencies": {
-    "clipboard": "^2.0.4",
-    "eslint": "^5.16.0",
-    "pulp": "^13.0.0",
-    "purescript": "^0.13.0",
-    "purescript-psa": "^0.7.3",
-    "rimraf": "^2.6.3"
+    "clipboard": "^2.0.8",
+    "eslint": "^7.25.0",
+    "pulp": "^15.0.0",
+    "purescript": "^0.14.1",
+    "purescript-psa": "^0.8.2",
+    "rimraf": "^3.0.2"
   }
 }
